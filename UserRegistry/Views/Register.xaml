@@ -25,14 +25,14 @@
             <TextBox Text="{Binding Name, Mode=TwoWay}" PlaceholderText="Name" TextChanged="CheckInput" x:Name="Username" CornerRadius="6" />
             <TextBox Grid.Row="0" Text="{Binding Surname, Mode=TwoWay}" Grid.Column="1" PlaceholderText="Surname" TextChanged="CheckInput" x:Name="UserSurname"
                      CornerRadius="6" />
-            <DatePicker Grid.Row="0" Date="{Binding DateOfBirth, Mode=TwoWay}" Grid.Column="2" />
-            <TextBox Grid.Row="1" Grid.Column="0" CornerRadius="6" Text="{Binding PhoneNumber, Mode=TwoWay}"
-                     PlaceholderText="Phone Number" />
+            <DatePicker HorizontalAlignment="Stretch" Grid.Row="0" Date="{Binding DateOfBirth, Mode=TwoWay}" Grid.Column="2" />
+            <TextBox MaxLength="10" Grid.Row="1" Grid.Column="0" CornerRadius="6"  Text="{Binding PhoneNumber, Mode=TwoWay}"
+                     PlaceholderText="Phone Number" TextChanged="CheckNumericInput" />
             <TextBox Grid.Row="1" Text="{Binding Address, Mode=TwoWay}" Grid.Column="1" CornerRadius="6"
                      Grid.ColumnSpan="2" PlaceholderText="Address" />
             <TextBox Grid.Row="2" Text="{Binding City, Mode=TwoWay}" Grid.Column="0" CornerRadius="6"
                      PlaceholderText="City" />
-            <TextBox Grid.Row="2" Text="{Binding Cap, Mode=TwoWay}" Grid.Column="1" CornerRadius="6"
+            <TextBox Grid.Row="2" TextChanged="CheckNumericInput" MaxLength="5"  Text="{Binding Cap, Mode=TwoWay}" Grid.Column="1" CornerRadius="6"
                      PlaceholderText="Postal Code" />
             <Button x:Name="BtnAddUser" Background="LightSlateGray" Foreground="White" IsEnabled="False" Grid.Row="2" Click="AddUser" Grid.Column="2" Content="Add User!" HorizontalAlignment="Stretch" CornerRadius="6" />
 
@@ -86,7 +86,7 @@
                                            Margin="5" />
                                 <TextBlock Text="{Binding Surname}" HorizontalAlignment="Center" Grid.Column="2"
                                            Margin="5" />
-                                <TextBlock Text="{Binding DateOfBirth}" HorizontalAlignment="Center" Grid.Column="3"
+                                <TextBlock Text="{Binding DateOfBirthDisplay}" HorizontalAlignment="Center" Grid.Column="3"
                                            Margin="5" />
                                 <TextBlock Text="{Binding Address}" HorizontalAlignment="Center" Grid.Column="4"
                                            Margin="5" />
