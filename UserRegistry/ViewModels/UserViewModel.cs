@@ -10,7 +10,7 @@ namespace UserRegistry.ViewModels
     internal class UserViewModel : INotifyPropertyChanged
     {
         private User _user = new();
-        public static ObservableCollection<User> Users { get; set; } = UserManager.GetUsers();
+        public static ObservableCollection<User> Users { get; set; } = [];
         public event PropertyChangedEventHandler PropertyChanged;
 
         public User GetUser
@@ -49,7 +49,7 @@ namespace UserRegistry.ViewModels
             }
         }
 
-        public DateTime DateOfBirth
+        public DateTimeOffset DateOfBirth
         {
             get => _user.DateOfBirth;
             set
@@ -58,6 +58,8 @@ namespace UserRegistry.ViewModels
                 OnPropertyChanged(nameof(DateOfBirth));
             }
         }
+
+   
 
         public string Address
         {
@@ -89,7 +91,7 @@ namespace UserRegistry.ViewModels
             }
         }
 
-        public int PhoneNumber
+        public string PhoneNumber
         {
             get => _user.PhoneNumber;
             set
