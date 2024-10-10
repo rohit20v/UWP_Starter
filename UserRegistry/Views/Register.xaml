@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="UserRegistry.Views.Login"
+    x:Class="UserRegistry.Views.Register"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:UserRegistry.Views"
@@ -22,14 +22,19 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBox PlaceholderText="Name" CornerRadius="6" />
-            <TextBox Grid.Row="0" Grid.Column="1" PlaceholderText="Surname" CornerRadius="6" />
-            <DatePicker Grid.Row="0" Grid.Column="2" />
-            <TextBox Grid.Row="1" Grid.Column="1" CornerRadius="6" Grid.ColumnSpan="2" PlaceholderText="Address" />
-            <TextBox Grid.Row="1" Grid.Column="0" CornerRadius="6" PlaceholderText="Phone Number" />
-            <TextBox Grid.Row="2" Grid.Column="0" CornerRadius="6" PlaceholderText="City" />
-            <TextBox Grid.Row="2" Grid.Column="1" CornerRadius="6" PlaceholderText="Postal Code" />
-            <Button Grid.Row="2" Grid.Column="2" Content="Add User!" HorizontalAlignment="Stretch"  CornerRadius="6"/>
+            <TextBox Text="{Binding Name, Mode=TwoWay}" PlaceholderText="Name" TextChanged="CheckInput" x:Name="Username" CornerRadius="6" />
+            <TextBox Grid.Row="0" Text="{Binding Surname, Mode=TwoWay}" Grid.Column="1" PlaceholderText="Surname" TextChanged="CheckInput" x:Name="UserSurname"
+                     CornerRadius="6" />
+            <DatePicker Grid.Row="0" Date="{Binding DateOfBirth, Mode=TwoWay}" Grid.Column="2" />
+            <TextBox Grid.Row="1" Grid.Column="0" CornerRadius="6" Text="{Binding PhoneNumber, Mode=TwoWay}"
+                     PlaceholderText="Phone Number" />
+            <TextBox Grid.Row="1" Text="{Binding Address, Mode=TwoWay}" Grid.Column="1" CornerRadius="6"
+                     Grid.ColumnSpan="2" PlaceholderText="Address" />
+            <TextBox Grid.Row="2" Text="{Binding City, Mode=TwoWay}" Grid.Column="0" CornerRadius="6"
+                     PlaceholderText="City" />
+            <TextBox Grid.Row="2" Text="{Binding Cap, Mode=TwoWay}" Grid.Column="1" CornerRadius="6"
+                     PlaceholderText="Postal Code" />
+            <Button x:Name="BtnAddUser" Background="LightSlateGray" Foreground="White" IsEnabled="False" Grid.Row="2" Click="AddUser" Grid.Column="2" Content="Add User!" HorizontalAlignment="Stretch" CornerRadius="6" />
 
         </Grid>
         <ScrollViewer Margin="16" BorderBrush="LightSlateGray" BorderThickness="1">
