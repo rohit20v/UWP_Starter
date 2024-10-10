@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace UserRegistry.Models
 {
@@ -11,12 +6,12 @@ namespace UserRegistry.Models
     {
         public static ObservableCollection<User> UserList = [];
 
-        public ObservableCollection<User> GetUsers()
+        public static ObservableCollection<User> GetUsers()
         {
             return UserList;
         }
 
-        public void AddUsers(User user)
+        public static void AddUsers(User user)
         {
             UserList.Add(user);
         }
