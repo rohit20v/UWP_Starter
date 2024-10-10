@@ -9,8 +9,8 @@ namespace UserRegistry.ViewModels
 {
     internal class UserViewModel : INotifyPropertyChanged
     {
-        private User _user = new("", "");
-        public ObservableCollection<User> Users { get; set; } = UserManager.GetUsers();
+        private User _user = new();
+        public static ObservableCollection<User> Users { get; set; } = UserManager.GetUsers();
         public event PropertyChangedEventHandler PropertyChanged;
 
         public User GetUser
