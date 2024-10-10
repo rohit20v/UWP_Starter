@@ -16,17 +16,10 @@ namespace UserRegistry.Models
         public int Cap { get; set; }
         public int PhoneNumber { get; set; }
 
-        public User(string name, string surname, DateTime dateOfBirth = default, string address = null, string city = null, int cap = default, int phoneNumber = default)
+        public User()
         {
             _commonIdCounter++;
             UserId = _commonIdCounter;
-            Name = name;
-            Surname = surname;
-            DateOfBirth = dateOfBirth;
-            Address = address;
-            City = city;
-            Cap = cap;
-            PhoneNumber = phoneNumber;
         }
     }
 }
