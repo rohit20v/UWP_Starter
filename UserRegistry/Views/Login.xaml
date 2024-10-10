@@ -8,8 +8,95 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <StackPanel>
 
-                <Button HorizontalAlignment="Center">HI</Button>
-    </Grid>
+        <TextBlock Text="hey" HorizontalAlignment="Center" Margin="8" FontSize="32" />
+        <Grid RowSpacing="8" ColumnSpacing="16" Margin="16,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBox PlaceholderText="Name" CornerRadius="6" />
+            <TextBox Grid.Row="0" Grid.Column="1" PlaceholderText="Surname" CornerRadius="6" />
+            <DatePicker Grid.Row="0" Grid.Column="2" />
+            <TextBox Grid.Row="1" Grid.Column="1" CornerRadius="6" Grid.ColumnSpan="2" PlaceholderText="Address" />
+            <TextBox Grid.Row="1" Grid.Column="0" CornerRadius="6" PlaceholderText="Phone Number" />
+            <TextBox Grid.Row="2" Grid.Column="0" CornerRadius="6" PlaceholderText="City" />
+            <TextBox Grid.Row="2" Grid.Column="1" CornerRadius="6" PlaceholderText="Postal Code" />
+            <Button Grid.Row="2" Grid.Column="2" Content="Add User!" HorizontalAlignment="Stretch"  CornerRadius="6"/>
+
+        </Grid>
+        <ScrollViewer Margin="16" BorderBrush="LightSlateGray" BorderThickness="1">
+            <StackPanel>
+                <Grid Background="LightSlateGray" Padding="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="250" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="ID" FontWeight="Bold" HorizontalAlignment="Center" />
+                    <TextBlock Text="Name" FontWeight="Bold" HorizontalAlignment="Center"
+                               Grid.Column="1" />
+                    <TextBlock Text="Surname" FontWeight="Bold" HorizontalAlignment="Center"
+                               Grid.Column="2" />
+                    <TextBlock Text="DOB" FontWeight="Bold" HorizontalAlignment="Center"
+                               Grid.Column="3" />
+                    <TextBlock Text="Address" FontWeight="Bold" HorizontalAlignment="Center"
+                               Grid.Column="4" />
+                    <TextBlock Text="City" FontWeight="Bold" HorizontalAlignment="Center"
+                               Grid.Column="5" />
+                    <TextBlock Text="CAP" FontWeight="Bold" HorizontalAlignment="Center"
+                               Grid.Column="6" />
+                    <TextBlock Text="Phone Number" FontWeight="Bold" HorizontalAlignment="Center"
+                               Grid.Column="7" />
+                </Grid>
+
+                <ListView ItemsSource="{Binding Users}" Margin="-10,4,0,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="150" />
+                                    <ColumnDefinition Width="150" />
+                                    <ColumnDefinition Width="150" />
+                                    <ColumnDefinition Width="250" />
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="150" />
+                                    <ColumnDefinition Width="250" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding UserId}" HorizontalAlignment="Center" Margin="5" />
+                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" Grid.Column="1"
+                                           Margin="5" />
+                                <TextBlock Text="{Binding Surname}" HorizontalAlignment="Center" Grid.Column="2"
+                                           Margin="5" />
+                                <TextBlock Text="{Binding DateOfBirth}" HorizontalAlignment="Center" Grid.Column="3"
+                                           Margin="5" />
+                                <TextBlock Text="{Binding Address}" HorizontalAlignment="Center" Grid.Column="4"
+                                           Margin="5" />
+                                <TextBlock Text="{Binding City}" HorizontalAlignment="Center" Grid.Column="5"
+                                           Margin="5" />
+                                <TextBlock Text="{Binding Cap}" HorizontalAlignment="Center" Grid.Column="6" Margin="5" />
+                                <TextBlock Text="{Binding PhoneNumber}" HorizontalAlignment="Center" Grid.Column="7"
+                                           Margin="5" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
+    </StackPanel>
+
+
 </Page>
