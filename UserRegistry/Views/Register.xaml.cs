@@ -2,8 +2,6 @@
 using Windows.UI.Xaml.Controls;
 using UserRegistry.ViewModels;
 using System.Linq;
-using Windows.System;
-using Windows.UI.Xaml.Input;
 using User = UserRegistry.Models.User;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
