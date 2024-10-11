@@ -163,7 +163,9 @@
       <Version>6.2.14</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Utils\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\Login.xaml">
       <SubType>Designer</SubType>

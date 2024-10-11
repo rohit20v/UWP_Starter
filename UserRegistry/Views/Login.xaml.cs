@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using System.Drawing;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using UserRegistry.Models;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -28,9 +20,27 @@ namespace UserRegistry.Views
         }
 
 
-        private void LoginBtn(object sender, RoutedEventArgs e)
+        private async void LoginBtn(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Register));
+            if (Username.Text.Equals("admin") && Password.Password.Equals("admin"))
+            {
+                Frame.Navigate(typeof(Register));
+            }
+            else
+            {
+                var usernameErrorEffect = ErrorEffect(Username);
+                var pasErrorEffect = ErrorEffect(Password);
+
+                await Task.WhenAll(usernameErrorEffect, pasErrorEffect);
+            }
+        }
+
+        private static async Task ErrorEffect(Control sender)
+        {
+            var defaultColor = sender.BorderBrush;
+            sender.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+            await Task.Delay(2000);
+            sender.BorderBrush = defaultColor;
         }
     }
 }
