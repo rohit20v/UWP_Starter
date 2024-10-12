@@ -3,7 +3,8 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using UserRegistry.Models;
+using System.Diagnostics;
+using System;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -24,6 +25,8 @@ namespace UserRegistry.Views
         {
             if (Username.Text.Equals("admin") && Password.Password.Equals("admin"))
             {
+                Debug.WriteLine("Admin logged in at: " + DateTime.Now);
+                Console.WriteLine("Admin logged in at: " + DateTime.Now);
                 Frame.Navigate(typeof(Register));
             }
             else

@@ -3,6 +3,8 @@ using Windows.UI.Xaml.Controls;
 using UserRegistry.ViewModels;
 using System.Linq;
 using User = UserRegistry.Models.User;
+using System.Diagnostics;
+using System;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -23,6 +25,8 @@ namespace UserRegistry.Views
         {
             UserViewModel.Users.Add(_viewModel.GetUser);
             _viewModel.GetUser = new User();
+            Debug.WriteLine($"Admin added User [{_viewModel.Name}] at: " + DateTime.Now);
+            Console.WriteLine($"Admin added User [{_viewModel.Name}] at: " + DateTime.Now);
         }
 
         private void CheckInput(object sender, TextChangedEventArgs e)
