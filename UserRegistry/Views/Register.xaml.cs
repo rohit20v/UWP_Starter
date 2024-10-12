@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace UserRegistry.Views
 {
-    public sealed partial class Register : Page
+    public sealed partial class Register
     {
         private readonly UserViewModel _viewModel = new();
 
