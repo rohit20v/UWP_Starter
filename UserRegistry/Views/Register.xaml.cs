@@ -5,6 +5,7 @@ using System.Linq;
 using User = UserRegistry.Models.User;
 using System.Diagnostics;
 using System;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -18,6 +19,11 @@ namespace UserRegistry.Views
         {
             InitializeComponent();
             DataContext = _viewModel;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            Welcome.Text = "Welcome " + e.Parameter as string;
         }
 
 

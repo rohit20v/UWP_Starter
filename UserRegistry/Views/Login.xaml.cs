@@ -27,7 +27,7 @@ namespace UserRegistry.Views
             {
                 Debug.WriteLine("Admin logged in at: " + DateTime.Now);
                 Console.WriteLine("Admin logged in at: " + DateTime.Now);
-                Frame.Navigate(typeof(Register));
+                Frame.Navigate(typeof(Register), Username.Text);
             }
             else
             {
