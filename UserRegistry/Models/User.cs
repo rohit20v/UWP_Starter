@@ -8,8 +8,8 @@ namespace UserRegistry.Models
     {
         private static int _commonIdCounter;
 
-        [Key] public int UserId { get; private set;}
-        [Required] public string Name { get; set; }
+        [Key] public int UserId { get; private set;}  
+        [Required] public string Name { get; set; }   
         [Required] public string Surname { get; set; }
         public DateTimeOffset DateOfBirth { get; set; }
         public string DateOfBirthDisplay => DateOfBirth.ToString("dd-MM-yyyy");

@@ -100,7 +100,7 @@
                                     <ColumnDefinition Width="250" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding UserId}" HorizontalAlignment="Center" Margin="5" />
-                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" Grid.Column="1"
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Name}" HorizontalAlignment="Center" Grid.Column="1"
                                            Margin="5" />
                                 <TextBlock Text="{Binding Surname}" HorizontalAlignment="Center" Grid.Column="2"
                                            Margin="5" />
