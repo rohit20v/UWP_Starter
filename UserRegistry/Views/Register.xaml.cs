@@ -59,5 +59,10 @@ namespace UserRegistry.Views
                 textBox.SelectionStart = textBox.MaxLength;
             }
         }
+
+        private void Logout(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Login));
+        }
     }
 }

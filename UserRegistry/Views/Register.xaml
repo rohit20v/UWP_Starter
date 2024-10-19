@@ -9,8 +9,13 @@
 
     <StackPanel>
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
             <TextBlock x:Name="Welcome" HorizontalAlignment="Left" Padding="8" Margin="8" FontSize="32" FontWeight="Bold"/>
-            <TextBlock Text="User Registry" HorizontalAlignment="Center" Margin="8" FontSize="32" FontWeight="Black"
+            <TextBlock Grid.Column="1" Text="User Registry" HorizontalAlignment="Center" Margin="8" FontSize="32" FontWeight="Black"
                        Padding="8" CharacterSpacing="69" ToolTipService.ToolTip="Page Title">
                 <TextBlock.Foreground>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -21,6 +26,7 @@
                     </LinearGradientBrush>
                 </TextBlock.Foreground>
             </TextBlock>
+            <Button Grid.Column="2" Margin="16" Padding="8" Click="Logout" CornerRadius="4" HorizontalAlignment="Right"  Content="Logout" Background="CornflowerBlue" FontWeight="Bold" />
         </Grid>
 
         <Grid RowSpacing="8" ColumnSpacing="16" Margin="16,0">
@@ -35,7 +41,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <TextBox Text="{Binding Name, Mode=TwoWay}" PlaceholderText="Name" TextChanged="CheckInput"
-                     x:Name="Username" CornerRadius="6" />
+                     x:Name="Username" CornerRadius="6"  />
             <TextBox Grid.Row="0" Text="{Binding Surname, Mode=TwoWay}" Grid.Column="1" PlaceholderText="Surname"
                      TextChanged="CheckInput" x:Name="UserSurname"
                      CornerRadius="6" />
