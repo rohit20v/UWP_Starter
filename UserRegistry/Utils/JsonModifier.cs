@@ -11,14 +11,13 @@ namespace UserRegistry.Utils
 {
     internal class JsonModifier
     {
-        private const string FileName = "credentials.json";
 
         
-        public async Task<List<Credentials>> ReadCredentialsAsync()
+        public async Task<List<Credentials>> ReadCredentialsAsync(string fileName)
         {
             try
             {
-                StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync(FileName);
+                StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync(fileName);
                 string json = await FileIO.ReadTextAsync(file);
 
                 var deserializedJson = JsonConvert.DeserializeObject<List<Credentials>>(json);
@@ -35,9 +34,9 @@ namespace UserRegistry.Utils
             }
         }
 
-        public void WriteCredentialsAsync(List<Credentials> credentialsList)
+        public void WriteCredentialsAsync<T>(List<T> credentialsList, string fileName)
         {
-            var file =  ApplicationData.Current.LocalFolder.CreateFileAsync(FileName,
+            var file =  ApplicationData.Current.LocalFolder.CreateFileAsync(fileName,
                 CreationCollisionOption.ReplaceExisting).GetAwaiter().GetResult();
              FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(credentialsList)).GetAwaiter().GetResult();
         }

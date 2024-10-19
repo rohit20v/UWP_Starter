@@ -62,7 +62,7 @@ namespace UserRegistry.Views
                 
                 _credentialsList?.Add(new Credentials(Username.Text, encryptedPassword));
 
-                _credentialsManager.WriteCredentialsAsync(_credentialsList);
+                _credentialsManager.WriteCredentialsAsync(_credentialsList, "credentials.json");
 
                 Frame.Navigate(typeof(Register), Username.Text);
                 result = true;
@@ -132,7 +132,7 @@ namespace UserRegistry.Views
         {
             try
             {
-                _credentialsList = await _credentialsManager.ReadCredentialsAsync();
+                _credentialsList = await _credentialsManager.ReadCredentialsAsync("credentials.json");
             }
             catch
             {
