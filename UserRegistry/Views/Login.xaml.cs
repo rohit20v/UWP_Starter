@@ -11,6 +11,7 @@ using System.Text;
 using Windows.Storage;
 using Newtonsoft.Json;
 using UserRegistry.Models;
+using UserRegistry.Utils;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -19,6 +20,7 @@ namespace UserRegistry.Views
     public sealed partial class Login
     {
         private List<Credentials> _credentialsList = [];
+        private JsonModifier _credentialsManager = new();
 
         public Login()
         {
@@ -46,25 +48,28 @@ namespace UserRegistry.Views
 
         private bool RegisterNewUser()
         {
-            bool result = false;
+            var result = false;
             try
             {
                 var encryptedPassword = EncryptMyPass(Password.Password);
+                var doExists =  _credentialsList?.Exists(credential => credential.Username.Equals(Username.Text)) ?? false;
 
-                _credentialsList.Add(new(Username.Text, encryptedPassword));
+                if (doExists)
+                {
+                    ErrorDisplay.Text = "Unavailable username!";
+                    return result;
+                }
+                
+                _credentialsList?.Add(new Credentials(Username.Text, encryptedPassword));
 
-                var file = ApplicationData.Current.LocalFolder
-                    .CreateFileAsync("credentials.json", CreationCollisionOption.ReplaceExisting)
-                    .GetAwaiter()
-                    .GetResult();
+                _credentialsManager.WriteCredentialsAsync(_credentialsList);
 
-                FileIO.WriteTextAsync(file,
-                    JsonConvert.SerializeObject(_credentialsList)
-                ).GetAwaiter().GetResult();
                 Frame.Navigate(typeof(Register), Username.Text);
+                result = true;
             }
             catch (Exception ex)
             {
+                ErrorDisplay.Text = "Error registering new user";
             }
 
             return result;
@@ -72,54 +77,66 @@ namespace UserRegistry.Views
 
         private string EncryptMyPass(string password)
         {
-            string hashedPass = "";
+            StringBuilder hashedPass = new StringBuilder();
             SHA256 sha256 = SHA256.Create();
             byte[] bteBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
             foreach (var item in bteBytes)
             {
-                hashedPass += item.ToString("x2");
+                hashedPass.Append(item.ToString("x2"));
             }
 
-            return hashedPass;
+            return hashedPass.ToString();
         }
 
         private async void CheckCredentials()
         {
-            bool isValid = false;
-
-            foreach (var item in _credentialsList)
+            var doesExist = false;
+            try
             {
-                //TODO make the login work
-                isValid = (item.Username.ToUpper().Equals(Username.Text.ToUpper()) &&
-                           item.Password.Equals(Password.Password));
-                if (isValid)
+                foreach (var item in _credentialsList)
                 {
-                    Debug.WriteLine("Admin logged in at: " + DateTime.Now);
-                    Console.WriteLine("Admin logged in at: " + DateTime.Now);
-                    Frame.Navigate(typeof(Register), Username.Text);
-                    break;
-                }
-                else
-                {
+                    var hashedPass = EncryptMyPass(Password.Password);
+                    var isValid = (item.Username.Equals(Username.Text) &&
+                                   item.Password.Equals(hashedPass));
+                    if (isValid)
+                    {
+                        Debug.WriteLine("Admin logged in at: " + DateTime.Now);
+                        Console.WriteLine("Admin logged in at: " + DateTime.Now);
+                        Frame.Navigate(typeof(Register), Username.Text);
+                        doesExist = true;
+                        break;
+                    }
+
                     var usernameErrorEffect = ErrorEffect(Username);
                     var pasErrorEffect = ErrorEffect(Password);
+                    ErrorDisplay.Text = "Invalid credentials";
 
                     await Task.WhenAll(usernameErrorEffect, pasErrorEffect);
                 }
+
+                if (!doesExist)
+                {
+                    ErrorDisplay.Text = "No user found";
+
+                }
+
             }
+            catch
+            {
+                ErrorDisplay.Text = "Error checking credentials";
+            }
+
         }
 
         private async void ReadJSON()
         {
             try
             {
-                StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync("credentials.json");
-                string cred = await FileIO.ReadTextAsync(file);
-                _credentialsList = JsonConvert.DeserializeObject<List<Credentials>>(cred);
+                _credentialsList = await _credentialsManager.ReadCredentialsAsync();
             }
             catch
             {
-
+                ErrorDisplay.Text = "Error reading JSON";
             }
         }
     }
