@@ -13,14 +13,14 @@ namespace UserRegistry.Utils
     {
 
         
-        public List<Credentials> ReadJsonFile(string fileName)
+        public List<T> ReadJsonFile<T>(string fileName)
         {
             try
             {
                 StorageFile file = ApplicationData.Current.LocalFolder.GetFileAsync(fileName).GetAwaiter().GetResult();
                 string json = FileIO.ReadTextAsync(file).GetAwaiter().GetResult();
 
-                var deserializedJson = JsonConvert.DeserializeObject<List<Credentials>>(json);
+                var deserializedJson = JsonConvert.DeserializeObject<List<T>>(json);
                 if (deserializedJson != null)
                 {
                     return deserializedJson;

@@ -19,6 +19,7 @@ namespace UserRegistry.Views
 {
     public sealed partial class Login
     {
+        private const string Filename = "credentials.json";
         private List<Credentials> _credentialsList = [];
         private JsonModifier _credentialsManager = new();
 
@@ -62,7 +63,7 @@ namespace UserRegistry.Views
                 
                 _credentialsList?.Add(new Credentials(Username.Text, encryptedPassword));
 
-                _credentialsManager.WriteJsonFile(_credentialsList, "credentials.json");
+                _credentialsManager.WriteJsonFile(_credentialsList, Filename);
 
                 Frame.Navigate(typeof(Register), Username.Text);
                 result = true;
@@ -132,7 +133,7 @@ namespace UserRegistry.Views
         {
             try
             {
-                _credentialsList = _credentialsManager.ReadJsonFile("credentials.json");
+                _credentialsList = _credentialsManager.ReadJsonFile<Credentials>(Filename);
             }
             catch
             {
