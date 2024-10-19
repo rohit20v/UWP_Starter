@@ -25,7 +25,7 @@ namespace UserRegistry.Views
         public Login()
         {
             this.InitializeComponent();
-            ReadJSON();
+            ReadJson();
         }
 
 
@@ -128,11 +128,11 @@ namespace UserRegistry.Views
 
         }
 
-        private async void ReadJSON()
+        private void ReadJson()
         {
             try
             {
-                _credentialsList = await _credentialsManager.ReadCredentialsAsync("credentials.json");
+                _credentialsList = _credentialsManager.ReadCredentialsAsync("credentials.json");
             }
             catch
             {

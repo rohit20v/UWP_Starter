@@ -13,12 +13,12 @@ namespace UserRegistry.Utils
     {
 
         
-        public async Task<List<Credentials>> ReadCredentialsAsync(string fileName)
+        public List<Credentials> ReadCredentialsAsync(string fileName)
         {
             try
             {
-                StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync(fileName);
-                string json = await FileIO.ReadTextAsync(file);
+                StorageFile file = ApplicationData.Current.LocalFolder.GetFileAsync(fileName).GetAwaiter().GetResult();
+                string json = FileIO.ReadTextAsync(file).GetAwaiter().GetResult();
 
                 var deserializedJson = JsonConvert.DeserializeObject<List<Credentials>>(json);
                 if (deserializedJson != null)
