@@ -23,6 +23,8 @@ namespace UserRegistry.Views
         {
             InitializeComponent();
             DataContext = _viewModel;
+            DatePicker.MinYear = new DateTimeOffset(new DateTime(1950, 1, 1));
+            DatePicker.MaxYear = DateTimeOffset.Now;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -46,6 +48,15 @@ namespace UserRegistry.Views
 
         private void CheckInput(object sender, TextChangedEventArgs e)
         {
+            var textBox = sender as TextBox;
+
+            var newText = new string(textBox.Text.Where(char.IsLetter).ToArray());
+
+            if (textBox.Text != newText)
+            {
+                textBox.Text = newText;
+                textBox.SelectionStart = newText.Length;
+            }
             BtnAddUser.IsEnabled = !string.IsNullOrEmpty(Username.Text) && !string.IsNullOrEmpty(UserSurname.Text);
         }
 

@@ -10,12 +10,14 @@
     <StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="Welcome" HorizontalAlignment="Left" Padding="8" Margin="8" FontSize="32" FontWeight="Bold"/>
-            <TextBlock Grid.Column="1" Text="User Registry" HorizontalAlignment="Center" Margin="8" FontSize="32" FontWeight="Black"
+            <TextBlock x:Name="Welcome" HorizontalAlignment="Left" Padding="8" Margin="8" FontSize="32"
+                       FontWeight="Bold" />
+            <TextBlock Grid.Column="1" Text="User Registry" HorizontalAlignment="Center" Margin="8" FontSize="32"
+                       FontWeight="Black"
                        Padding="8" CharacterSpacing="69" ToolTipService.ToolTip="Page Title">
                 <TextBlock.Foreground>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -26,7 +28,8 @@
                     </LinearGradientBrush>
                 </TextBlock.Foreground>
             </TextBlock>
-            <Button Grid.Column="2" Margin="16" Padding="8" Click="Logout" CornerRadius="4" HorizontalAlignment="Right"  Content="Logout" Background="CornflowerBlue" FontWeight="Bold" />
+            <Button Grid.Column="2" Margin="16" Padding="8" Click="Logout" CornerRadius="4" HorizontalAlignment="Right"
+                    Content="Logout" Background="CornflowerBlue" FontWeight="Bold" />
         </Grid>
 
         <Grid RowSpacing="8" ColumnSpacing="16" Margin="16,0">
@@ -41,12 +44,12 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <TextBox Text="{Binding Name, Mode=TwoWay}" PlaceholderText="Name" TextChanged="CheckInput"
-                     x:Name="Username" CornerRadius="6"  />
+                     x:Name="Username" CornerRadius="6" />
             <TextBox Grid.Row="0" Text="{Binding Surname, Mode=TwoWay}" Grid.Column="1" PlaceholderText="Surname"
                      TextChanged="CheckInput" x:Name="UserSurname"
                      CornerRadius="6" />
             <DatePicker HorizontalAlignment="Stretch" Grid.Row="0" Date="{Binding DateOfBirth, Mode=TwoWay}"
-                        Grid.Column="2" />
+                        Grid.Column="2" x:Name="DatePicker"/>
             <TextBox MaxLength="10" Grid.Row="1" Grid.Column="0" CornerRadius="6"
                      Text="{Binding PhoneNumber, Mode=TwoWay}"
                      PlaceholderText="Phone Number" TextChanged="CheckNumericInput" />
@@ -106,7 +109,8 @@
                                     <ColumnDefinition Width="250" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding UserId}" HorizontalAlignment="Center" Margin="5" />
-                                <TextBlock TextWrapping="Wrap" Text="{Binding Name}" HorizontalAlignment="Center" Grid.Column="1"
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Name}" HorizontalAlignment="Center"
+                                           Grid.Column="1"
                                            Margin="5" />
                                 <TextBlock Text="{Binding Surname}" HorizontalAlignment="Center" Grid.Column="2"
                                            Margin="5" />
