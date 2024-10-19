@@ -6,6 +6,7 @@ using User = UserRegistry.Models.User;
 using System.Diagnostics;
 using System;
 using Windows.UI.Xaml.Navigation;
+using UserRegistry.Utils;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -14,6 +15,9 @@ namespace UserRegistry.Views
     public sealed partial class Register
     {
         private readonly UserViewModel _viewModel = new();
+        private JsonModifier _usersManager = new();
+        private string _loggedUser = "";
+        private int _lastUserId;
 
         public Register()
         {
@@ -23,13 +27,18 @@ namespace UserRegistry.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Welcome.Text = "Welcome " + e.Parameter as string;
+            _loggedUser = e.Parameter as string;
+            Welcome.Text = "Welcome " + _loggedUser;
+            LoadUsersIntoCollection();
         }
 
 
         private void AddUser(object sender, RoutedEventArgs e)
         {
+            _lastUserId += 1;
+            _viewModel.GetUser.UserId = _lastUserId;
             UserViewModel.Users.Add(_viewModel.GetUser);
+            _usersManager.WriteJsonFile(UserViewModel.Users.ToList(), $"{_loggedUser}.json");
             _viewModel.GetUser = new User();
             Debug.WriteLine($"Admin added User [{_viewModel.Name}] at: " + DateTime.Now);
             Console.WriteLine($"Admin added User [{_viewModel.Name}] at: " + DateTime.Now);
@@ -62,7 +71,27 @@ namespace UserRegistry.Views
 
         private void Logout(object sender, RoutedEventArgs e)
         {
+            _loggedUser = "";
             Frame.Navigate(typeof(Login));
+        }
+
+        private void LoadUsersIntoCollection()
+        {
+            UserViewModel.Users.Clear();
+            try
+            {
+                foreach (var item in _usersManager.ReadJsonFile<User>($"{_loggedUser}.json"))
+                {
+                    UserViewModel.Users.Add(item);
+                }
+
+                var lastUser = UserViewModel.Users.OrderByDescending(u => u.UserId).FirstOrDefault();
+                _lastUserId = lastUser?.UserId ?? 0;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
