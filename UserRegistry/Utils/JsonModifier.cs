@@ -31,7 +31,7 @@ namespace UserRegistry.Utils
             }
             catch
             {
-                Console.WriteLine("Error reading credentials");
+                return [];
             }
         }
 
