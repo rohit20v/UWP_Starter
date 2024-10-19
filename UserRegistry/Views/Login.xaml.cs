@@ -39,10 +39,10 @@ namespace UserRegistry.Views
             else CheckCredentials();
         }
 
-        private static async Task ErrorEffect(Control sender)
+        private static async Task ErrorEffect(Control sender, Brush brushColor)
         {
             var defaultColor = sender.BorderBrush;
-            sender.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+            sender.BorderBrush = brushColor;
             await Task.Delay(2000);
             sender.BorderBrush = defaultColor;
         }
@@ -108,15 +108,22 @@ namespace UserRegistry.Views
                         break;
                     }
 
-                    var usernameErrorEffect = ErrorEffect(Username);
-                    var pasErrorEffect = ErrorEffect(Password);
-                    ErrorDisplay.Text = "Invalid credentials";
+                    var usernameErrorEffect = ErrorEffect(Username, new SolidColorBrush(Windows.UI.Colors.LawnGreen));
+                    var pasErrorEffect = ErrorEffect(Password, new SolidColorBrush(Windows.UI.Colors.LawnGreen));
+                    ErrorDisplay.Text = "Loading...";
+                    ErrorDisplay.Foreground = new SolidColorBrush(Windows.UI.Colors.LawnGreen);
 
                     await Task.WhenAll(usernameErrorEffect, pasErrorEffect);
                 }
 
                 if (!doesExist)
                 {
+
+                    var usernameErrorEffect = ErrorEffect(Username, new SolidColorBrush(Windows.UI.Colors.Red));
+                    var pasErrorEffect = ErrorEffect(Password, new SolidColorBrush(Windows.UI.Colors.Red));
+                    await Task.WhenAll(usernameErrorEffect, pasErrorEffect);
+
+                    ErrorDisplay.Foreground = new SolidColorBrush(Windows.UI.Colors.Red);
                     ErrorDisplay.Text = "No user found";
 
                 }
@@ -124,6 +131,11 @@ namespace UserRegistry.Views
             }
             catch
             {
+                var usernameErrorEffect = ErrorEffect(Username, new SolidColorBrush(Windows.UI.Colors.Red));
+                var pasErrorEffect = ErrorEffect(Password, new SolidColorBrush(Windows.UI.Colors.Red));
+                await Task.WhenAll(usernameErrorEffect, pasErrorEffect);
+                ErrorDisplay.Foreground = new SolidColorBrush(Windows.UI.Colors.Red);
+
                 ErrorDisplay.Text = "Error checking credentials";
             }
 
@@ -137,6 +149,11 @@ namespace UserRegistry.Views
             }
             catch
             {
+                var usernameErrorEffect = ErrorEffect(Username, new SolidColorBrush(Windows.UI.Colors.Red));
+                var pasErrorEffect = ErrorEffect(Password, new SolidColorBrush(Windows.UI.Colors.Red));
+                Task.WhenAll(usernameErrorEffect, pasErrorEffect).GetAwaiter().GetResult();
+                ErrorDisplay.Foreground = new SolidColorBrush(Windows.UI.Colors.Red);
+
                 ErrorDisplay.Text = "Error reading JSON";
             }
         }
