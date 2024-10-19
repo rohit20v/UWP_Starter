@@ -31,8 +31,7 @@ namespace UserRegistry.Utils
             }
             catch
             {
-                // Handle exceptions (e.g., file not found)
-                return [];
+                Console.WriteLine("Error reading credentials");
             }
         }
 
