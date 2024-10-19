@@ -13,7 +13,7 @@ namespace UserRegistry.Utils
     {
 
         
-        public List<Credentials> ReadCredentialsAsync(string fileName)
+        public List<Credentials> ReadJsonFile(string fileName)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace UserRegistry.Utils
             }
         }
 
-        public void WriteCredentialsAsync<T>(List<T> credentialsList, string fileName)
+        public void WriteJsonFile<T>(List<T> credentialsList, string fileName)
         {
             var file =  ApplicationData.Current.LocalFolder.CreateFileAsync(fileName,
                 CreationCollisionOption.ReplaceExisting).GetAwaiter().GetResult();
