@@ -8,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using Windows.Storage;
-using Newtonsoft.Json;
 using UserRegistry.Models;
 using UserRegistry.Utils;
 
@@ -34,7 +32,7 @@ namespace UserRegistry.Views
         {
             if (UserBox.IsChecked == true)
             {
-                if (RegisterNewUser()) Frame.Navigate(typeof(Register), Username.Text);
+                if (RegisterNewUser()) Frame.Navigate(typeof(MainMenu), Username.Text);
             }
             else CheckCredentials();
         }
@@ -65,7 +63,7 @@ namespace UserRegistry.Views
 
                 _credentialsManager.WriteJsonFile(_credentialsList, Filename);
 
-                Frame.Navigate(typeof(Register), Username.Text);
+                Frame.Navigate(typeof(MainMenu), Username.Text);
                 result = true;
             }
             catch (Exception ex)
@@ -103,7 +101,7 @@ namespace UserRegistry.Views
                     {
                         Debug.WriteLine("Admin logged in at: " + DateTime.Now);
                         Console.WriteLine("Admin logged in at: " + DateTime.Now);
-                        Frame.Navigate(typeof(Register), Username.Text);
+                        Frame.Navigate(typeof(MainMenu), Username.Text);
                         doesExist = true;
                         break;
                     }
