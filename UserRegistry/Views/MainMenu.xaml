@@ -9,9 +9,10 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView Loaded="LoadDefaultPage" SelectionChanged="ChangePage" PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Collapsed" IsSettingsVisible="False">
+        <NavigationView x:Name="Navbar" Loaded="LoadDefaultPage" SelectionChanged="ChangePage" PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Collapsed" IsSettingsVisible="False">
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Add Users" Tag="Register" Icon="ContactPresence" />
+                <!--<NavigationViewItem Content="Login" x:Name="Login" Tag="Login" Icon="Edit" />-->
+                <NavigationViewItem Content="Add Users" x:Name="Register" Tag="Register" Icon="ContactPresence" />
                 <NavigationViewItem Content="Exit" Icon=" Cancel" Tag="Exit" />
             </NavigationView.MenuItems>
             <Frame x:Name="ContentFrame" />

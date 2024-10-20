@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -33,6 +34,7 @@ namespace UserRegistry.Views
         private void LoadDefaultPage(object sender, RoutedEventArgs e)
         {
             ContentFrame.Navigate(typeof(Register), _loggedUser);
+            Register.IsSelected = ContentFrame.Content is Register;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -40,7 +42,6 @@ namespace UserRegistry.Views
             _loggedUser = e.Parameter as string;
         }
 
-        //TODO: FIX THE NAV FUNCTIONALITY
         private void ChangePage(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             var item = args.SelectedItem as NavigationViewItem;
