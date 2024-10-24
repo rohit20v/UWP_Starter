@@ -9,13 +9,65 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView x:Name="Navbar" Loaded="LoadDefaultPage" SelectionChanged="ChangePage" PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Collapsed" IsSettingsVisible="False">
-            <NavigationView.MenuItems>
-                <!--<NavigationViewItem Content="Login" x:Name="Login" Tag="Login" Icon="Edit" />-->
-                <NavigationViewItem Content="Add Users" x:Name="Register" Tag="Register" Icon="ContactPresence" />
-                <NavigationViewItem Content="Exit" Icon=" Cancel" Tag="Exit" />
-            </NavigationView.MenuItems>
-            <Frame x:Name="ContentFrame" />
-        </NavigationView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <CompositeTransform CenterY="0.5" CenterX="0.5" Rotation="-90.2"/>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FFB7D2FF" Offset="1"/>
+                    <GradientStop Color="#FF271B6F" Offset="0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <TextBlock x:Name="Welcome" Text="Hi, Unknown User" FontSize="16" Margin="16, 8" Padding="16, 8" HorizontalAlignment="Left" FontWeight="Black" CharacterSpacing="69" >
+                <TextBlock.Foreground>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <CompositeTransform CenterY="0.5" CenterX="0.5" Rotation="-90"/>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FFC6D0E3" Offset="1"/>
+                        <GradientStop Color="CornflowerBlue" Offset="0.175"/>
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+            </TextBlock>
+            <Button Margin="16, 8" Padding="16, 8" Click="Logout" CornerRadius="4" HorizontalAlignment="Right"
+                    Content="Logout" Background="CornflowerBlue" FontWeight="Bold" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button Content="Home" x:Name="BtnHome" Margin="16, 8" Padding="16,8" CornerRadius="4" HorizontalAlignment="Center" Click="GoToHome" Foreground="#FF6800FF" FontWeight="SemiBold">
+                    <Button.BorderBrush>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+
+                        </LinearGradientBrush>
+                    </Button.BorderBrush>
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <LinearGradientBrush.RelativeTransform>
+                                <CompositeTransform CenterY="0.5" CenterX="0.5" Rotation="-89"/>
+                            </LinearGradientBrush.RelativeTransform>
+                            <GradientStop Color="#FF9EB9ED"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <Button Content="Register Users" x:Name="BtnRegister" Margin="16, 8" Padding="16,8" CornerRadius="4" HorizontalAlignment="Center" Click="GoToRegister" Foreground="#FF6800FF" FontWeight="SemiBold">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <LinearGradientBrush.RelativeTransform>
+                                <CompositeTransform CenterY="0.5" CenterX="0.5" Rotation="-90"/>
+                            </LinearGradientBrush.RelativeTransform>
+                            <GradientStop Color="#FF9EB9ED" Offset="1"/>
+                            <GradientStop Color="White" Offset="0"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Frame x:Name="ContentFrame" Grid.Row="1"/>
     </Grid>
 </Page>

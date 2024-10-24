@@ -22,7 +22,7 @@ namespace UserRegistry.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainMenu : Page
+    public sealed partial class MainMenu
     {
         private string _loggedUser;
 
@@ -31,36 +31,40 @@ namespace UserRegistry.Views
             this.InitializeComponent();
         }
 
-        private void LoadDefaultPage(object sender, RoutedEventArgs e)
-        {
-            ContentFrame.Navigate(typeof(Register), _loggedUser);
-            Register.IsSelected = ContentFrame.Content is Register;
-        }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _loggedUser = e.Parameter as string;
+            Welcome.Text = $"Hi, {_loggedUser}!";
+            ContentFrame.Navigate(typeof(Home), _loggedUser);
+            UpdateButtonStates();
+            
         }
 
-        private void ChangePage(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+
+        private void GoToHome(object sender, RoutedEventArgs e)
         {
-            var item = args.SelectedItem as NavigationViewItem;
+            ContentFrame.Navigate(typeof(Home), _loggedUser);
+            UpdateButtonStates();
 
-            switch (item.Tag.ToString())
-            {
-                case "Register":
-                    if (_loggedUser == "")
-                    {
-                        ContentFrame.Navigate(typeof(Login));
-                        break;
-                    }
+        }
 
-                    ContentFrame.Navigate(typeof(Register), _loggedUser);
-                    break;
-                case "Exit":
-                    CoreApplication.Exit();
-                    break;
-            }
+        private void GoToRegister(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(typeof(Register), _loggedUser);
+            UpdateButtonStates();
+
+        }
+
+        private void UpdateButtonStates()
+        {
+            BtnHome.IsEnabled = ContentFrame.CurrentSourcePageType != typeof(Home);
+            BtnRegister.IsEnabled = ContentFrame.CurrentSourcePageType != typeof(Register);
+        }
+
+        private void Logout(object sender, RoutedEventArgs e)
+        {
+            _loggedUser = "";
+            Frame.Navigate(typeof(Login));
         }
     }
 }

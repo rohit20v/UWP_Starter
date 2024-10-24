@@ -25,7 +25,11 @@
                  FontSize="32" Padding="8" CornerRadius="16" BorderBrush="CornflowerBlue" BorderThickness="1" />
         <PasswordBox x:Name="Password" Margin="16" Width="690" PlaceholderText="Enter Password"
                      FontSize="32" Padding="8" CornerRadius="16" BorderBrush="CornflowerBlue" BorderThickness="1" />
-        <CheckBox Content="New User" HorizontalAlignment="Center" x:Name="UserBox"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <CheckBox Content="New User" HorizontalAlignment="Center" x:Name="UserBox"/>
+            <CheckBox Content="Remember Me" HorizontalAlignment="Center" x:Name="RememberMe"/>
+
+        </StackPanel>
         <TextBlock HorizontalAlignment="Center" x:Name="ErrorDisplay" Foreground="OrangeRed" FontWeight="Bold" CharacterSpacing="69" /> 
         <Button Content="Login" HorizontalAlignment="Center" Margin="42" Width="690" FontSize="42" Padding="16"
                 CornerRadius="16" Background="CornflowerBlue" FontWeight="Bold" FontFamily="Trebuchet MS"

@@ -30,7 +30,6 @@ namespace UserRegistry.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _loggedUser = e.Parameter as string;
-            Welcome.Text = "Welcome " + _loggedUser;
             LoadUsersIntoCollection();
         }
 
