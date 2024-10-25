@@ -13,7 +13,7 @@ namespace UserRegistry.Utils
     {
 
         
-        public List<T> ReadJsonFile<T>(string fileName)
+        public static List<T> ReadJsonFile<T>(string fileName)
         {
             try
             {
@@ -34,11 +34,11 @@ namespace UserRegistry.Utils
             }
         }
 
-        public void WriteJsonFile<T>(List<T> credentialsList, string fileName)
+        public static void WriteJsonFile<T>(List<T> contentList, string fileName)
         {
             var file =  ApplicationData.Current.LocalFolder.CreateFileAsync(fileName,
                 CreationCollisionOption.ReplaceExisting).GetAwaiter().GetResult();
-             FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(credentialsList)).GetAwaiter().GetResult();
+             FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(contentList)).GetAwaiter().GetResult();
         }
     }
 }
