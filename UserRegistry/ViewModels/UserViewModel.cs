@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using UserRegistry.Models;
 
 namespace UserRegistry.ViewModels
@@ -8,6 +9,7 @@ namespace UserRegistry.ViewModels
     internal class UserViewModel : INotifyPropertyChanged
     {
         private User _user = new();
+        private User _selectedUser = new();
         public static ObservableCollection<User> Users { get; set; } = [];
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -24,6 +26,30 @@ namespace UserRegistry.ViewModels
                 OnPropertyChanged(nameof(City));
                 OnPropertyChanged(nameof(Cap));
                 OnPropertyChanged(nameof(PhoneNumber));
+            }
+        }
+
+        public User SelectedUser
+        {
+            get => _selectedUser;
+            set
+            {
+                _selectedUser = value;
+                if (_selectedUser != null)
+                {
+                    GetUser = new User()
+                    {
+                        Name = SelectedUser.Name,
+                        Surname = SelectedUser.Surname,
+                        DateOfBirth = SelectedUser.DateOfBirth,
+                        Address = SelectedUser.Address,
+                        City = SelectedUser.City,
+                        Cap = SelectedUser.Cap,
+                        PhoneNumber = SelectedUser.PhoneNumber,
+                    };
+                }
+
+                OnPropertyChanged(nameof(_selectedUser));
             }
         }
 
@@ -57,7 +83,6 @@ namespace UserRegistry.ViewModels
             }
         }
 
-   
 
         public string Address
         {
@@ -99,6 +124,31 @@ namespace UserRegistry.ViewModels
             }
         }
 
+        public void UpdateSelectedUser()
+        {
+            if (_selectedUser != null)
+            {
+                int index = Users.IndexOf(_selectedUser);
+                if (index >= 0)
+                {
+                    var userId = Users[index].UserId;
+                    GetUser.UserId = userId;
+                    Users[index] = GetUser;
+                }
+            }
+        }
+
+        public void DeleteSelectedUser()
+        {
+            if (_selectedUser != null)
+            {
+                int index = Users.IndexOf(_selectedUser);
+                if (index >= 0)
+                {
+                    Users.RemoveAt(index);
+                }
+            }
+        }
 
         protected virtual void OnPropertyChanged(string propertyName)
         {

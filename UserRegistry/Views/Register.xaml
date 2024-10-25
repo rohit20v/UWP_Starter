@@ -52,11 +52,11 @@
                         CornerRadius="6" Margin="16,0" />
                 <Button x:Name="BtnUpdatedUser" Background="DarkOrange" Foreground="White" FontWeight="Bold"
                         IsEnabled="False"
-                        Click="AddUser" Content="Update User!" HorizontalAlignment="Center"
+                        Click="UpdateUserOnClick" Content="Update User!" HorizontalAlignment="Center"
                         CornerRadius="6" Margin="16,0" />
                 <Button x:Name="BtnDeleteUser" Background="DarkRed" Foreground="White" FontWeight="Bold"
                         IsEnabled="False"
-                        Click="AddUser" Content="Delete User!" HorizontalAlignment="Center"
+                        Click="RemoveUserOnClick" Content="Delete User!" HorizontalAlignment="Center"
                         CornerRadius="6" Margin="16,0" />
             </StackPanel>
 
@@ -91,7 +91,7 @@
                                Grid.Column="7" />
                 </Grid>
 
-                <ListView ItemsSource="{Binding Users}" Margin="-10,4,0,0">
+                <ListView SelectionChanged="SelectedUser" SelectedItem="{Binding SelectedUser, Mode=TwoWay}" ItemsSource="{Binding Users}" Margin="-10,4,0,0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>

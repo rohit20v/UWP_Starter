@@ -45,6 +45,20 @@ namespace UserRegistry.Views
             Console.WriteLine($"Admin added User [{_viewModel.Name}] at: " + DateTime.Now);
         }
 
+        private void UpdateUserOnClick(object sender, RoutedEventArgs e)
+        {
+            _viewModel.UpdateSelectedUser();
+            JsonModifier.WriteJsonFile(UserViewModel.Users.ToList(), $"{_loggedUser}.json");
+            _viewModel.GetUser = new User();
+            BtnUpdatedUser.IsEnabled = false;
+            BtnDeleteUser.IsEnabled = false;
+        }
+        private void SelectedUser(object sender, SelectionChangedEventArgs e)
+        {
+            BtnUpdatedUser.IsEnabled = true;
+            BtnDeleteUser.IsEnabled = true;
+        }
+
         private void CheckInput(object sender, TextChangedEventArgs e)
         {
             var textBox = sender as TextBox;
@@ -96,6 +110,15 @@ namespace UserRegistry.Views
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        private void RemoveUserOnClick(object sender, RoutedEventArgs e)
+        {
+            _viewModel.DeleteSelectedUser();
+            JsonModifier.WriteJsonFile(UserViewModel.Users.ToList(), $"{_loggedUser}.json");
+            _viewModel.GetUser = new User();
+            BtnDeleteUser.IsEnabled = false;
+            BtnUpdatedUser.IsEnabled = false;
         }
     }
 }
