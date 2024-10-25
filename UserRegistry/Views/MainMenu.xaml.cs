@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using UserRegistry.Utils;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -64,6 +65,7 @@ namespace UserRegistry.Views
         private void Logout(object sender, RoutedEventArgs e)
         {
             _loggedUser = "";
+            JsonModifier.WriteJsonFile([""], "session.json");
             Frame.Navigate(typeof(Login));
         }
     }

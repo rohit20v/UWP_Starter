@@ -39,7 +39,7 @@ namespace UserRegistry.Views
             _lastUserId += 1;
             _viewModel.GetUser.UserId = _lastUserId;
             UserViewModel.Users.Add(_viewModel.GetUser);
-            _usersManager.WriteJsonFile(UserViewModel.Users.ToList(), $"{_loggedUser}.json");
+            JsonModifier.WriteJsonFile(UserViewModel.Users.ToList(), $"{_loggedUser}.json");
             _viewModel.GetUser = new User();
             Debug.WriteLine($"Admin added User [{_viewModel.Name}] at: " + DateTime.Now);
             Console.WriteLine($"Admin added User [{_viewModel.Name}] at: " + DateTime.Now);
@@ -79,18 +79,12 @@ namespace UserRegistry.Views
             }
         }
 
-        private void Logout(object sender, RoutedEventArgs e)
-        {
-            _loggedUser = "";
-            Frame.Navigate(typeof(Login));
-        }
-
         private void LoadUsersIntoCollection()
         {
             UserViewModel.Users.Clear();
             try
             {
-                foreach (var item in _usersManager.ReadJsonFile<User>($"{_loggedUser}.json"))
+                foreach (var item in JsonModifier.ReadJsonFile<User>($"{_loggedUser}.json"))
                 {
                     UserViewModel.Users.Add(item);
                 }

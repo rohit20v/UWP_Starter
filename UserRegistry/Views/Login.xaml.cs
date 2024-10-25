@@ -6,10 +6,12 @@ using Windows.UI.Xaml.Media;
 using System.Diagnostics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using UserRegistry.Models;
 using UserRegistry.Utils;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -19,12 +21,12 @@ namespace UserRegistry.Views
     {
         private const string Filename = "credentials.json";
         private List<Credentials> _credentialsList = [];
-        private JsonModifier _credentialsManager = new();
 
         public Login()
         {
             this.InitializeComponent();
             ReadJson();
+            this.Loaded += (s, e) => CheckSession();
         }
 
 
@@ -51,17 +53,28 @@ namespace UserRegistry.Views
             try
             {
                 var encryptedPassword = EncryptMyPass(Password.Password);
-                var doExists =  _credentialsList?.Exists(credential => credential.Username.Equals(Username.Text)) ?? false;
+                var doExists = _credentialsList?.Exists(credential => credential.Username.Equals(Username.Text)) ??
+                               false;
 
                 if (doExists)
                 {
                     ErrorDisplay.Text = "Unavailable username!";
                     return result;
                 }
-                
+
                 _credentialsList?.Add(new Credentials(Username.Text, encryptedPassword));
 
-                _credentialsManager.WriteJsonFile(_credentialsList, Filename);
+                JsonModifier.WriteJsonFile(_credentialsList, Filename);
+
+                JsonModifier.WriteJsonFile(
+                    [
+                        new
+                        {
+                            Credentials = new Credentials(Username.Text, encryptedPassword),
+                            RememberMe = RememberMe.IsChecked
+                        }
+                    ],
+                    "session.json");
 
                 Frame.Navigate(typeof(MainMenu), Username.Text);
                 result = true;
@@ -90,6 +103,7 @@ namespace UserRegistry.Views
         private async void CheckCredentials()
         {
             var doesExist = false;
+
             try
             {
                 foreach (var item in _credentialsList)
@@ -101,6 +115,10 @@ namespace UserRegistry.Views
                     {
                         Debug.WriteLine("Admin logged in at: " + DateTime.Now);
                         Console.WriteLine("Admin logged in at: " + DateTime.Now);
+                        JsonModifier.WriteJsonFile(
+                            [item.Username, RememberMe.IsChecked == true ? "true" : "false"],
+                            "session.json");
+
                         Frame.Navigate(typeof(MainMenu), Username.Text);
                         doesExist = true;
                         break;
@@ -116,16 +134,13 @@ namespace UserRegistry.Views
 
                 if (!doesExist)
                 {
-
                     var usernameErrorEffect = ErrorEffect(Username, new SolidColorBrush(Windows.UI.Colors.Red));
                     var pasErrorEffect = ErrorEffect(Password, new SolidColorBrush(Windows.UI.Colors.Red));
                     await Task.WhenAll(usernameErrorEffect, pasErrorEffect);
 
                     ErrorDisplay.Foreground = new SolidColorBrush(Windows.UI.Colors.Red);
                     ErrorDisplay.Text = "No user found";
-
                 }
-
             }
             catch
             {
@@ -136,14 +151,13 @@ namespace UserRegistry.Views
 
                 ErrorDisplay.Text = "Error checking credentials";
             }
-
         }
 
         private void ReadJson()
         {
             try
             {
-                _credentialsList = _credentialsManager.ReadJsonFile<Credentials>(Filename);
+                _credentialsList = JsonModifier.ReadJsonFile<Credentials>(Filename);
             }
             catch
             {
@@ -153,6 +167,28 @@ namespace UserRegistry.Views
                 ErrorDisplay.Foreground = new SolidColorBrush(Windows.UI.Colors.Red);
 
                 ErrorDisplay.Text = "Error reading JSON";
+            }
+        }
+
+        public void CheckSession()
+        {
+            List<string> session = JsonModifier.ReadJsonFile<string>("session.json");
+            Debug.WriteLine(session.Count);
+            try
+            {
+                if (session.Count() == 2)
+                {
+                    var username = session[0];
+                    var isTrue = session[1];
+                    if (isTrue.Equals("true"))
+                    {
+                        Frame.Navigate(typeof(MainMenu), username);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("No session found");
             }
         }
     }
