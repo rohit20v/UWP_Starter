@@ -68,5 +68,10 @@ namespace UserRegistry.Views
             JsonModifier.WriteJsonFile([""], "session.json");
             Frame.Navigate(typeof(Login));
         }
+
+        private void BtnExit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
+        }
     }
 }
