@@ -1,0 +1,145 @@
+﻿<Page
+    x:Class="UserRegistry.Views.HttpFetch"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UserRegistry.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <DataTemplate x:Key="CommentTemplate">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <TextBlock Margin="8" Padding="8" Text="{Binding Id}" />
+                <TextBlock Margin="8" Padding="8" Text="{Binding Name}" />
+                <TextBlock Margin="8" Padding="8" Text="{Binding Email}" />
+                <TextBlock Margin="8" Padding="8" Text="{Binding Body}" TextWrapping="Wrap" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TodoTemplate">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <TextBlock Margin="8" Padding="8" Text="{Binding UserId}" />
+                <TextBlock Margin="8" Padding="8" Text="{Binding Id}" />
+                <TextBlock Margin="8" Padding="8" Text="{Binding Title}" />
+                <TextBlock Margin="8" Padding="8" Text="{Binding Completed}" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="UsersTemplate">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                <StackPanel Padding="8">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                        <StackPanel.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFFDFDFF" />
+                                <GradientStop Color="#FFA1BBEE" Offset="1" />
+                            </LinearGradientBrush>
+                        </StackPanel.Background>
+                        <TextBlock Text="ID" Width="50" FontWeight="Bold" Margin="5,0" Foreground="#FF6800FF" />
+                        <TextBlock Text="Name" Width="150" FontWeight="Bold" Margin="5,0" Foreground="#FF6800FF" />
+                        <TextBlock Text="Username" Width="100" FontWeight="Bold" Margin="5,0" Foreground="#FF6800FF" />
+                        <TextBlock Text="Email" Width="200" FontWeight="Bold" Margin="5,0" Foreground="#FF6800FF" />
+                        <TextBlock Text="Street" Width="150" FontWeight="Bold" Margin="5,0" Foreground="#FF6800FF" />
+                        <TextBlock Text="Suite" Width="100" FontWeight="Bold" Margin="5,0" Foreground="#FF6800FF" />
+                        <TextBlock Text="City" Width="100" FontWeight="Bold" Margin="5,0" Foreground="#FF6800FF" />
+                        <TextBlock Text="Zipcode" Width="100" FontWeight="Bold" Margin="5,0" Foreground="#FF6800FF" />
+                        <TextBlock Text="Lat." Width="50" FontWeight="Bold" Margin="5,0" Foreground="#FF6800FF" />
+                        <TextBlock Text="Lng." Width="50" FontWeight="Bold" Margin="5,0" Foreground="#FF6800FF" />
+                        <TextBlock Text="Company Name" Width="150" FontWeight="Bold" Margin="5,0"
+                                   Foreground="#FF6800FF" />
+                        <TextBlock Text="Catch Phrase" Width="200" FontWeight="Bold" Margin="5,0"
+                                   Foreground="#FF6800FF" />
+                        <TextBlock Text="BS" Width="100" FontWeight="Bold" Margin="5,0" Foreground="#FF6800FF" />
+                        <TextBlock Text="Phone" Width="100" FontWeight="Bold" Margin="5,0" Foreground="#FF6800FF" />
+                        <TextBlock Text="Website" Width="150" FontWeight="Bold" Margin="5,0" Foreground="#FF6800FF" />
+                    </StackPanel>
+
+                    <StackPanel Padding="8" Orientation="Horizontal">
+                        <TextBlock Text="{Binding id}" Width="50" VerticalAlignment="Center" Margin="5,0" />
+                        <TextBlock Text="{Binding name}" Width="150" VerticalAlignment="Center" Margin="5,0" />
+                        <TextBlock Text="{Binding username}" Width="100" VerticalAlignment="Center" Margin="5,0" />
+                        <TextBlock Text="{Binding email}" Width="200" VerticalAlignment="Center" Margin="5,0" />
+                        <TextBlock Text="{Binding address.street}" Width="150" VerticalAlignment="Center" Margin="5,0" />
+                        <TextBlock Text="{Binding address.suite}" Width="100" VerticalAlignment="Center" Margin="5,0" />
+                        <TextBlock Text="{Binding address.city}" Width="100" VerticalAlignment="Center" Margin="5,0" />
+                        <TextBlock Text="{Binding address.zipcode}" Width="100" VerticalAlignment="Center" Margin="5,0" />
+                        <TextBlock Text="{Binding address.geo.lat}" Width="50" VerticalAlignment="Center" Margin="5,0" />
+                        <TextBlock Text="{Binding address.geo.lng}" Width="50 " VerticalAlignment="Center "
+                                   Margin="5 , 0 " />
+                        <TextBlock Text="{Binding company.name}" Width="150 " VerticalAlignment="Center "
+                                   Margin="5 , 0 " />
+                        <TextBlock Text="{Binding company.catchPhrase}" Width="200 " VerticalAlignment="Center "
+                                   Margin="5 , 0 " />
+                        <TextBlock Text="{Binding company.bs}" Width="100" VerticalAlignment="Center" Margin="5 , 0 " />
+                        <TextBlock Text="{Binding phone}" Width="100" VerticalAlignment="Center" Margin="5 , 0 " />
+                        <TextBlock Text="{Binding website}" Width="150" VerticalAlignment="Center" Margin="5 , 0 " />
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </DataTemplate>
+
+    </Page.Resources>
+
+
+    <StackPanel>
+        <StackPanel Margin="16" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Comment" Click="FetchComments" x:Name="Comment" Margin="16, 8" Padding="16,8"
+                    CornerRadius="4"
+                    HorizontalAlignment="Center"
+                    Foreground="#FF6800FF" FontWeight="SemiBold">
+                <Button.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    </LinearGradientBrush>
+                </Button.BorderBrush>
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <CompositeTransform CenterY="0.5" CenterX="0.5" Rotation="-89" />
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FF9EB9ED" />
+                        <GradientStop Color="White" Offset="1" />
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Content="Todos" Click="FetchTodo" x:Name="Todo" Margin="16, 8" Padding="16,8" CornerRadius="4"
+                    HorizontalAlignment="Center"
+                    Foreground="#FF6800FF" FontWeight="SemiBold">
+                <Button.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    </LinearGradientBrush>
+                </Button.BorderBrush>
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <CompositeTransform CenterY="0.5" CenterX="0.5" Rotation="-89" />
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FF9EB9ED" />
+                        <GradientStop Color="White" Offset="1" />
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+
+            <Button Content="Users" Click="FetchUser" x:Name="Users" Margin="16, 8" Padding="16,8" CornerRadius="4"
+                    HorizontalAlignment="Center"
+                    Foreground="#FF6800FF" FontWeight="SemiBold">
+                <Button.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    </LinearGradientBrush>
+                </Button.BorderBrush>
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <CompositeTransform CenterY="0.5" CenterX="0.5" Rotation="-89" />
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FF9EB9ED" />
+                        <GradientStop Color="White" Offset="1" />
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+
+
+        </StackPanel>
+        <ListView x:Name="CommentList" HorizontalAlignment="Stretch" />
+    </StackPanel>
+</Page>

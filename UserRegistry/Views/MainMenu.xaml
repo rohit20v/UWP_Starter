@@ -47,11 +47,26 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button Content="API" x:Name="BtnHttp" Margin="16, 8" Padding="16,8" CornerRadius="4" HorizontalAlignment="Center"
+                        Click="GoToHttpPage" Foreground="#FF6800FF" FontWeight="SemiBold" >
+                    <Button.BorderBrush>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        </LinearGradientBrush>
+                    </Button.BorderBrush>
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <LinearGradientBrush.RelativeTransform>
+                                <CompositeTransform CenterY="0.5" CenterX="0.5" Rotation="-89" />
+                            </LinearGradientBrush.RelativeTransform>
+                            <GradientStop Color="#FF9EB9ED" />
+                            <GradientStop Color="White" Offset="1" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
                 <Button Content="Home" x:Name="BtnHome" Margin="16, 8" Padding="16,8" CornerRadius="4"
                         HorizontalAlignment="Center" Click="GoToHome" Foreground="#FF6800FF" FontWeight="SemiBold">
                     <Button.BorderBrush>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-
                         </LinearGradientBrush>
                     </Button.BorderBrush>
                     <Button.Background>

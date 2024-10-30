@@ -60,6 +60,7 @@ namespace UserRegistry.Views
         {
             BtnHome.IsEnabled = ContentFrame.CurrentSourcePageType != typeof(Home);
             BtnRegister.IsEnabled = ContentFrame.CurrentSourcePageType != typeof(Register);
+            BtnHttp.IsEnabled = ContentFrame.CurrentSourcePageType != typeof(HttpFetch);
         }
 
         private void Logout(object sender, RoutedEventArgs e)
@@ -72,6 +73,12 @@ namespace UserRegistry.Views
         private void BtnExit(object sender, RoutedEventArgs e)
         {
             Application.Current.Exit();
+        }
+
+        private void GoToHttpPage(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(typeof(HttpFetch), _loggedUser);
+            UpdateButtonStates();
         }
     }
 }
