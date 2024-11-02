@@ -65,11 +65,7 @@ namespace UserRegistry.Views
 
             DataList.ItemsSource = HttpRequest.FetchApi<User>(_url + "users");
         }
-
-        private void FetchPost(object sender, RoutedEventArgs e)
-        {
-        }
-
+ 
 
         private async void FetchUserPost(object sender, SelectionChangedEventArgs e)
         {
