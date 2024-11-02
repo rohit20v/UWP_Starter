@@ -20,6 +20,8 @@ using UserRegistry.Utils;
 using UserRegistry.ViewModels;
 using DataTemplate = Windows.UI.Xaml.DataTemplate;
 using User = UserRegistry.Models.UserAPI.User;
+using System.Diagnostics;
+using UserRegistry.Models.UserAPI;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -40,9 +42,9 @@ namespace UserRegistry.Views
 
         public void FetchDefaultJsonData()
         {
-            CommentList.ItemTemplate = this.Resources["CommentTemplate"] as DataTemplate;
+            DataList.ItemTemplate = this.Resources["CommentTemplate"] as DataTemplate;
 
-            CommentList.ItemsSource = HttpRequest.FetchApi<Comment>(_url + "comments");
+            DataList.ItemsSource = HttpRequest.FetchApi<Comment>(_url + "comments");
         }
 
         private void FetchComments(object sender, RoutedEventArgs e)
@@ -52,15 +54,53 @@ namespace UserRegistry.Views
 
         private void FetchTodo(object sender, RoutedEventArgs e)
         {
-            CommentList.ItemTemplate = this.Resources["TodoTemplate"] as DataTemplate;
+            DataList.ItemTemplate = this.Resources["TodoTemplate"] as DataTemplate;
 
-            CommentList.ItemsSource = HttpRequest.FetchApi<Todo>(_url + "todos");
+            DataList.ItemsSource = HttpRequest.FetchApi<Todo>(_url + "todos");
         }
+
         private void FetchUser(object sender, RoutedEventArgs e)
         {
-            CommentList.ItemTemplate = this.Resources["UsersTemplate"] as DataTemplate;
+            DataList.ItemTemplate = this.Resources["UsersTemplate"] as DataTemplate;
 
-            CommentList.ItemsSource = HttpRequest.FetchApi<User>(_url + "users");
+            DataList.ItemsSource = HttpRequest.FetchApi<User>(_url + "users");
+        }
+
+        private void FetchPost(object sender, RoutedEventArgs e)
+        {
+        }
+
+
+        private async void FetchUserPost(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataList.SelectedItem is User selectedItem)
+            {
+                var result = HttpRequest.FetchApi<Post>(_url + "posts?userId=" + selectedItem.id);
+
+                ScrollViewer scrollViewer = new ScrollViewer();
+                StackPanel stack = new StackPanel();
+                stack.Children.Add(new TextBlock
+                {
+                    Text = $"Post id: {result[0].id}", FontSize = 16, Margin = new Thickness(8),
+                    HorizontalAlignment = HorizontalAlignment.Center
+                });
+                stack.Children.Add(new TextBlock
+                {
+                    Text = result[0].body, FontSize = 32, TextWrapping = TextWrapping.Wrap,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                });
+
+                scrollViewer.Content = stack;
+
+                ContentDialog dialog = new ContentDialog()
+                {
+                    Title = result[0].title,
+                    Content = scrollViewer,
+                    PrimaryButtonText = "OK",
+                };
+
+                await dialog.ShowAsync();
+            }
         }
     }
 }
